@@ -1,3 +1,9 @@
+const _orig = console.log;
+console.log = (...args: unknown[]) => {
+    if (typeof args[0] === 'string' && args[0].startsWith('Closing session')) return;
+    _orig.apply(console, args);
+};
+
 import makeWASocket from './Socket/index'
 
 export * from '../WAProto/index.js'
