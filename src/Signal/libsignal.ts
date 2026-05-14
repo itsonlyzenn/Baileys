@@ -1,5 +1,5 @@
 // @ts-ignore
-import * as libsignal from 'libsignal'
+import * as libsignal from '../libsignal-patched/index.js';
 // @ts-ignore
 import { PreKeyWhisperMessage } from 'libsignal/src/protobufs'
 import { LRUCache } from 'lru-cache'
