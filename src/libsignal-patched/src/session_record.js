@@ -270,6 +270,7 @@ class SessionRecord {
             console.warn("Session already closed", session);
             return;
         }
+        console.log("PATCH WORKS") // tambah ini sementara
         session.indexInfo.closed = Date.now();
     }
 
